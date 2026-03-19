@@ -30,7 +30,14 @@ function Cloud({
   );
 }
 
-function SunCore({ cx = 12, cy = 12, outerR = 9, innerR = 6.5, circleR = 4.5, color = '#FCD34D' }: {
+function SunCore({
+  cx = 12,
+  cy = 12,
+  outerR = 9,
+  innerR = 6.5,
+  circleR = 4.5,
+  color = '#FCD34D',
+}: {
   cx?: number;
   cy?: number;
   outerR?: number;

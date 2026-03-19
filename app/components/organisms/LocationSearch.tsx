@@ -2,15 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import type { Location } from '@/app/lib/weather';
-
-interface GeoResult {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-  country: string;
-  admin1?: string;
-}
+import LocationResultItem, { type GeoResult } from '@/app/components/molecules/LocationResultItem';
 
 interface Props {
   onSelect: (location: Location) => void;
@@ -131,33 +123,7 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
       {open && results.length > 0 && (
         <ul className="absolute z-50 mt-1 w-full bg-base-100 border border-base-300 rounded-box shadow-lg overflow-hidden">
           {results.map((r) => (
-            <li key={r.id}>
-              <button
-                type="button"
-                className="w-full text-left px-4 py-2 hover:bg-base-200 transition-colors flex items-center gap-2"
-                onClick={() => handleSelect(r)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-4 w-4 text-base-content/40 shrink-0"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 0 0 .281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 1 0 3 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 0 0 2.273 1.765 11.842 11.842 0 0 0 .976.544l.062.029.018.008.006.003ZM10 11.25a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <div>
-                  <span className="font-medium">{r.name}</span>
-                  {r.admin1 && (
-                    <span className="text-base-content/60 text-sm">, {r.admin1}</span>
-                  )}
-                  <span className="text-base-content/60 text-sm">, {r.country}</span>
-                </div>
-              </button>
-            </li>
+            <LocationResultItem key={r.id} result={r} onSelect={handleSelect} />
           ))}
         </ul>
       )}
