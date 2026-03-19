@@ -1,0 +1,16 @@
+deploy:
+  stage: deploy
+  image: node:20-alpine
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  script:
+    - npm install --global vercel@latest
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+  environment:
+    name: production
+    url: https://$VERCEL_PROJECT_NAME.vercel.app
+  variables:
+    VERCEL_ORG_ID: $VERCEL_ORG_ID
+    VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
