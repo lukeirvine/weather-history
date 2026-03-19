@@ -4,8 +4,6 @@ deploy:
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
   script:
-    - echo "VERCEL_ORG_ID=$VERCEL_ORG_ID"
-    - echo "VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID"
     - npm install --global vercel@latest
     - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
     - vercel build --prod --token=$VERCEL_TOKEN
