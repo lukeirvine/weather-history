@@ -2,6 +2,28 @@ import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
+  const id = searchParams.get('id');
+
+  // Fetch a single location by numeric ID
+  if (id) {
+    const numericId = parseInt(id, 10);
+    if (!Number.isFinite(numericId) || numericId <= 0) {
+      return Response.json({ error: 'Invalid id' }, { status: 400 });
+    }
+    const url = new URL('https://geocoding-api.open-meteo.com/v1/get');
+    url.searchParams.set('id', String(numericId));
+    url.searchParams.set('language', 'en');
+    url.searchParams.set('format', 'json');
+    try {
+      const response = await fetch(url.toString(), { next: { revalidate: 86400 } });
+      if (!response.ok) return Response.json({ error: 'Not found' }, { status: 404 });
+      const data = await response.json();
+      return Response.json(data);
+    } catch {
+      return Response.json({ error: 'Geocoding error' }, { status: 500 });
+    }
+  }
+
   const q = searchParams.get('q');
 
   if (!q || q.trim().length < 2) {

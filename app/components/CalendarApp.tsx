@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import WeatherIcon from './WeatherIcon';
 import LocationSearch from './LocationSearch';
 import {
@@ -89,7 +90,12 @@ function DayCell({ dayNumber, dateStr, dayData, isToday, hasLocation }: DayCellP
 // --- Main Calendar App ---
 
 export default function CalendarApp() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initDone = useRef(false);
+
   const [location, setLocation] = useState<Location | null>(null);
+  const [initialized, setInitialized] = useState(false);
   const [viewMonth, setViewMonth] = useState(TODAY.getMonth());
   const [viewYear, setViewYear] = useState(TODAY.getFullYear());
   const [weatherData, setWeatherData] = useState<Record<string, WeatherDay>>({});
@@ -162,6 +168,42 @@ export default function CalendarApp() {
   useEffect(() => {
     setWeatherData({});
   }, [location]);
+
+  // Initialize location from URL params on first mount
+  useEffect(() => {
+    if (initDone.current) return;
+    initDone.current = true;
+
+    const locId = searchParams.get('loc');
+    if (!locId) {
+      setInitialized(true);
+      return;
+    }
+
+    fetch(`/api/geocode?id=${encodeURIComponent(locId)}`)
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => {
+        if (data && data.id) {
+          setLocation({
+            id: data.id,
+            name: data.name,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            country: data.country_code ?? data.country ?? '',
+            admin1: data.admin1 || undefined,
+          });
+        }
+      })
+      .catch(() => {})
+      .finally(() => setInitialized(true));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Sync selected location to URL as a single ?loc=<id> param
+  useEffect(() => {
+    if (!initialized || !location) return;
+    router.replace(`?loc=${location.id}`, { scroll: false });
+  }, [location, initialized, router]);
 
   function prevMonth() {
     if (viewMonth === 0) {

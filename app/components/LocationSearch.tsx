@@ -36,6 +36,15 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
+  // Reflect externally-set location (e.g. restored from URL) in the input field
+  useEffect(() => {
+    if (selectedLocation) {
+      setQuery(
+        `${selectedLocation.name}${selectedLocation.admin1 ? `, ${selectedLocation.admin1}` : ''}, ${selectedLocation.country}`
+      );
+    }
+  }, [selectedLocation]);
+
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     setQuery(value);
