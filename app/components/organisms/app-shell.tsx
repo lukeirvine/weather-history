@@ -132,7 +132,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             </div>
             {children}
 
-            <div className="text-neutral text-sm max-w-prose">
+            <div className="text-neutral/75 text-sm max-w-prose mt-9">
               This app was built in partnership with Claude. For reference,
               here&apos;s the <a href="" className="link link-primary transition-all">version</a> of the app Claude created on the original prompt without intervention.
             </div>
