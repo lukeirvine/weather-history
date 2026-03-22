@@ -81,9 +81,9 @@ export default function WeatherTable({
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-base-300">
+    <div className="overflow-auto rounded-lg border border-base-300 max-h-[calc(100vh-20rem)]">
       <table className="table table-sm w-full">
-        <thead>
+        <thead className="sticky top-0 z-20">
           <tr className="bg-base-300 text-base-content/60 text-xs uppercase tracking-wide">
             <th className="whitespace-nowrap sticky left-0 bg-base-300 z-10">Date</th>
             <th className="whitespace-nowrap">Condition</th>
