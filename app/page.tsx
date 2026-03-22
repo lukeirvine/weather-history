@@ -1,10 +1,5 @@
-import { Suspense } from 'react';
-import CalendarApp from '@/app/components/CalendarApp';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <Suspense>
-      <CalendarApp />
-    </Suspense>
-  );
+  redirect('/calendar');
 }

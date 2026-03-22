@@ -1,4 +1,4 @@
-import WeatherIcon from '@/app/components/atoms/WeatherIcon';
+import WeatherIcon from '@/app/components/atoms/weather-icon';
 
 export default function WeatherLegend() {
   return (
