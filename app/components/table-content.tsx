@@ -104,7 +104,6 @@ export default function TableContent() {
             windSpeedMax: daily.wind_speed_10m_max?.[i] ?? 0,
             windGustsMax: daily.wind_gusts_10m_max?.[i] ?? 0,
             windDirectionDominant: daily.wind_direction_10m_dominant?.[i] ?? 0,
-            uvIndexMax: daily.uv_index_max?.[i] ?? 0,
           };
         });
       }

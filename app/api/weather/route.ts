@@ -44,7 +44,6 @@ export async function GET(request: NextRequest) {
       'wind_speed_10m_max',
       'wind_gusts_10m_max',
       'wind_direction_10m_dominant',
-      'uv_index_max',
     ].join(',')
   );
   url.searchParams.set('temperature_unit', 'fahrenheit');

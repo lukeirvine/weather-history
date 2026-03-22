@@ -4,7 +4,6 @@ import {
   getCloudCoverFromCode,
   getConditionLabel,
   getWindDirection,
-  getUvLabel,
   formatSunTime,
   formatSunshineDuration,
   type WeatherDay,
@@ -75,7 +74,6 @@ export default function DayDetailContent({ dateStr, day }: DayDetailContentProps
   const conditionLabel = getConditionLabel(day.weatherCode);
   const cloudCover = getCloudCoverFromCode(day.weatherCode);
   const windDir = getWindDirection(day.windDirectionDominant);
-  const uvLabel = getUvLabel(day.uvIndexMax);
 
   return (
     <div>
@@ -133,15 +131,6 @@ export default function DayDetailContent({ dateStr, day }: DayDetailContentProps
         <StatRow icon="🌬️" label="Max gusts" value={`${Math.round(day.windGustsMax)} mph`} />
       </Section>
 
-      <Divider />
-
-      <Section title="UV Index">
-        <StatRow
-          icon="🕶️"
-          label="UV index"
-          value={`${Math.round(day.uvIndexMax)} · ${uvLabel}`}
-        />
-      </Section>
     </div>
   );
 }

@@ -12,7 +12,6 @@ export interface WeatherDay {
   windSpeedMax: number; // mph
   windGustsMax: number; // mph
   windDirectionDominant: number; // degrees 0-360
-  uvIndexMax: number;
 }
 
 export interface Location {

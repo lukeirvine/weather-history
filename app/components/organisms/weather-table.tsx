@@ -6,7 +6,6 @@ import {
   getCloudCoverFromCode,
   getConditionLabel,
   getWindDirection,
-  getUvLabel,
   formatSunTime,
   formatSunshineDuration,
   type WeatherDay,
@@ -97,7 +96,6 @@ export default function WeatherTable({
             <th className="whitespace-nowrap">Sunset</th>
             <th className="whitespace-nowrap">Wind</th>
             <th className="whitespace-nowrap">Gusts</th>
-            <th className="whitespace-nowrap">UV</th>
           </tr>
         </thead>
         <tbody>
@@ -110,7 +108,6 @@ export default function WeatherTable({
             const cloudCover = day ? getCloudCoverFromCode(day.weatherCode) : null;
             const conditionLabel = day ? getConditionLabel(day.weatherCode) : null;
             const windDir = day ? getWindDirection(day.windDirectionDominant) : null;
-            const uvLabel = day ? getUvLabel(day.uvIndexMax) : null;
 
             return (
               <tr
@@ -226,17 +223,7 @@ export default function WeatherTable({
                   )}
                 </td>
 
-                {/* UV */}
-                <td className="whitespace-nowrap">
-                  {day ? (
-                    <span>
-                      {Math.round(day.uvIndexMax)}
-                      <span className="text-xs text-base-content/40 ml-1">{uvLabel}</span>
-                    </span>
-                  ) : (
-                    <span className="text-base-content/25">—</span>
-                  )}
-                </td>
+
               </tr>
             );
           })}
