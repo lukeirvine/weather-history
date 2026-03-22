@@ -144,7 +144,7 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
-            className="h-4 w-4 text-success shrink-0"
+            className="h-4 w-4 text-primary shrink-0"
           >
             <path
               fillRule="evenodd"

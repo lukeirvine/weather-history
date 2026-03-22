@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import DayDetailContent from '@/app/components/molecules/day-detail-content';
-import type { WeatherDay } from '@/app/lib/weather';
+import { formatDateShort, type WeatherDay } from '@/app/lib/weather';
 
 interface DayDetailDrawerProps {
   isOpen: boolean;
@@ -40,7 +40,7 @@ export default function DayDetailDrawer({ isOpen, dateStr, day, onClose }: DayDe
 
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-base-300">
-          <span className="font-semibold text-sm text-base-content/70">{dateStr ?? ''}</span>
+          <span className="font-semibold text-sm text-base-content/70">{formatDateShort(dateStr ?? '')}</span>
           <button
             onClick={onClose}
             className="btn btn-ghost btn-xs btn-circle"
