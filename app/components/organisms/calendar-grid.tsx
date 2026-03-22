@@ -47,7 +47,7 @@ export default function CalendarGrid({
   const monthTempMax = monthDays.length ? Math.max(...monthDays.map((d) => d.tempMax)) : 100;
 
   return (
-    <div className="flex gap-2 flex-col">
+    <div className="flex gap-2 flex-col min-w-[540px]">
       {/* Day-of-week headers */}
       <div className="card bg-base-100 shadow grid grid-cols-7 border border-base-300">
         {DAY_NAMES.map((day) => (

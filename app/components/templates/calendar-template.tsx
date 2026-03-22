@@ -32,6 +32,7 @@ export default function CalendarTemplate({
 
   return (
     <>
+      <div className="overflow-x-auto">
       <CalendarGrid
         loading={loading}
         error={error}
@@ -43,6 +44,7 @@ export default function CalendarTemplate({
         selectedDateStr={selectedDateStr}
         onDayClick={handleDayClick}
       />
+      </div>
 
       {/* Mobile bottom drawer — desktop panel lives in AppShell */}
       <DayDetailDrawer

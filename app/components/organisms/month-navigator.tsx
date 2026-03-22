@@ -43,10 +43,10 @@ export default function MonthNavigator({
   return (
     <div className="card bg-base-100 shadow">
       <div className="card-body p-3 sm:p-4">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 flex-wrap grow">
             <select
-              className="select select-bordered select-sm max-w-40"
+              className="select select-bordered select-sm sm:max-w-40"
               value={viewMonth}
               onChange={(e) => onMonthChange(Number(e.target.value))}
             >
@@ -62,7 +62,7 @@ export default function MonthNavigator({
             </select>
 
             <select
-              className="select select-bordered select-sm max-w-40"
+              className="select select-bordered select-sm sm:max-w-40"
               value={viewYear}
               onChange={(e) => onYearChange(Number(e.target.value))}
             >
