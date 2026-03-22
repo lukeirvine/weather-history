@@ -91,9 +91,9 @@ export default function DayDetailContent({ dateStr, day }: DayDetailContentProps
       {/* Temperature — visually prominent */}
       <div className="px-5 pb-5">
         <div className="flex items-baseline gap-2">
-          <span className="text-3xl font-bold text-orange-400">{day.tempMax}°</span>
+          <span className="text-3xl font-bold text-secondary">{day.tempMax}°</span>
           <span className="text-lg text-base-content/25">/</span>
-          <span className="text-3xl font-bold text-sky-400">{day.tempMin}°</span>
+          <span className="text-3xl font-bold text-primary">{day.tempMin}°</span>
         </div>
         <div className="text-xs text-base-content/35 mt-0.5">High / Low</div>
       </div>

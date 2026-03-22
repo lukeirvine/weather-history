@@ -24,7 +24,7 @@ const TemperatureBar: React.FC<Readonly<TemperatureBarProps>> = ({ max, min, ran
       <div className="flex justify-between h-4 mb-0.5">
         {/* Low label */}
         <span
-          className="text-[10px] font-semibold leading-none text-accent"
+          className="text-[10px] font-semibold leading-none text-primary"
         >
           {Math.round(min)}°
         </span>
@@ -45,7 +45,7 @@ const TemperatureBar: React.FC<Readonly<TemperatureBarProps>> = ({ max, min, ran
             left: `${barLeft}%`,
             width: `${barWidth}%`,
             background:
-              'linear-gradient(to right, var(--color-accent), var(--color-secondary))',
+              'linear-gradient(to right, var(--color-primary), var(--color-secondary))',
           }}
         />
       </div>

@@ -87,8 +87,8 @@ export default function WeatherTable({
           <tr className="bg-base-300 text-base-content/60 text-xs uppercase tracking-wide">
             <th className="whitespace-nowrap sticky left-0 bg-base-300 z-10">Date</th>
             <th className="whitespace-nowrap">Condition</th>
-            <th className="whitespace-nowrap text-orange-400/80">High</th>
-            <th className="whitespace-nowrap text-sky-400/80">Low</th>
+            <th className="whitespace-nowrap text-secondary">High</th>
+            <th className="whitespace-nowrap text-primary">Low</th>
             <th className="whitespace-nowrap">Precip</th>
             <th className="whitespace-nowrap">Snow</th>
             <th className="whitespace-nowrap">Cloud</th>
@@ -148,12 +148,12 @@ export default function WeatherTable({
                 </td>
 
                 {/* High temp */}
-                <td className="tabular-nums font-semibold text-orange-400">
+                <td className="tabular-nums font-semibold text-secondary">
                   {day ? `${day.tempMax}°` : <span className="text-base-content/25">—</span>}
                 </td>
 
                 {/* Low temp */}
-                <td className="tabular-nums font-semibold text-sky-400">
+                <td className="tabular-nums font-semibold text-primary">
                   {day ? `${day.tempMin}°` : <span className="text-base-content/25">—</span>}
                 </td>
 
