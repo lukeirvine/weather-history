@@ -86,75 +86,78 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-base-200">
-      {/* Main scrollable content column */}
-      <div className="flex-1 min-w-0 overflow-y-auto p-3 sm:p-6">
-      <div className="max-w-5xl mx-auto space-y-4 pb-12">
-
-        {/* Page header */}
-        <div className="text-center pt-2">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            🌧️ Puddle Tracker
-          </h1>
-          <p className="text-base-content/50 text-sm mt-1">
-            Weather history that&apos;s actually good
-          </p>
-        </div>
-
-        {/* Location search */}
-        <LocationSearch onSelect={setLocation} selectedLocation={location} />
-
-        {/* Month/year navigation */}
-        <MonthNavigator
-          viewMonth={viewMonth}
-          viewYear={viewYear}
-          todayMonth={todayMonth}
-          todayYear={todayYear}
-          isAtMinMonth={isAtMinMonth}
-          isAtCurrentMonth={isAtCurrentMonth}
-          onPrevMonth={prevMonth}
-          onNextMonth={nextMonth}
-          onMonthChange={setViewMonth}
-          onYearChange={setViewYear}
-          onGoToToday={goToToday}
-        />
-
-        {/* Tab navigation */}
-        <div role="tablist" className="tabs tabs-border">
-          {TABS.map((tab) => (
-            <Link
-              key={tab.href}
-              href={tabHref(tab.href)}
-              role="tab"
-              className={clsx('tab', pathname === tab.href && 'tab-active')}
-            >
-              {tab.label}
-            </Link>
-          ))}
-        </div>
-
-        {children}
-      </div>
-      </div>
-
-      {/* Desktop side panel — slides in from the right edge */}
-      <div
-        className={clsx(
-          'hidden md:flex md:flex-col shrink-0 overflow-hidden',
-          'transition-[width] duration-300 ease-in-out',
-          'border-l border-base-300',
-          isPanelOpen ? 'w-[35vw]' : 'w-0 border-l-0',
-        )}
-      >
-        {/* Inner div holds fixed width so content never squishes during animation */}
-        <div className="w-[35vw] h-full flex flex-col">
-          {selectedDateStr && (
-            <DayDetailPanel
-              dateStr={selectedDateStr}
-              day={selectedDay}
-              onClose={onClose}
+    <div>
+      <div className="flex h-screen overflow-hidden bg-base-200">
+        {/* Main scrollable content column */}
+        <div className="flex-1 min-w-0 overflow-y-auto p-3 sm:p-6">
+          <div className="max-w-5xl mx-auto space-y-4 pb-6">
+            {/* Page header */}
+            <div className="text-center pt-2">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                🌧️ Puddle Tracker
+              </h1>
+              <p className="text-base-content/50 text-sm mt-1">
+                Weather history that&apos;s actually good
+              </p>
+            </div>
+            {/* Location search */}
+            <LocationSearch onSelect={setLocation} selectedLocation={location} />
+            {/* Month/year navigation */}
+            <MonthNavigator
+              viewMonth={viewMonth}
+              viewYear={viewYear}
+              todayMonth={todayMonth}
+              todayYear={todayYear}
+              isAtMinMonth={isAtMinMonth}
+              isAtCurrentMonth={isAtCurrentMonth}
+              onPrevMonth={prevMonth}
+              onNextMonth={nextMonth}
+              onMonthChange={setViewMonth}
+              onYearChange={setViewYear}
+              onGoToToday={goToToday}
             />
+            {/* Tab navigation */}
+            <div role="tablist" className="tabs tabs-border">
+              {TABS.map((tab) => (
+                <Link
+                  key={tab.href}
+                  href={tabHref(tab.href)}
+                  role="tab"
+                  className={clsx('tab', pathname === tab.href && 'tab-active')}
+                  onClick={onClose}
+                >
+                  {tab.label}
+                </Link>
+              ))}
+            </div>
+            {children}
+
+            <div className="text-neutral text-sm max-w-prose">
+              This app was built in partnership with Claude. For reference,
+              here&apos;s the <a href="" className="link link-primary transition-all">version</a> of the app Claude created on the original prompt without intervention.
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop side panel — slides in from the right edge */}
+        <div
+          className={clsx(
+            'hidden md:flex md:flex-col shrink-0 overflow-hidden',
+            'transition-[width] duration-300 ease-in-out',
+            'border-l border-base-300',
+            isPanelOpen ? 'w-[35vw]' : 'w-0 border-l-0',
           )}
+        >
+          {/* Inner div holds fixed width so content never squishes during animation */}
+          <div className="w-[35vw] h-full flex flex-col">
+            {selectedDateStr && (
+              <DayDetailPanel
+                dateStr={selectedDateStr}
+                day={selectedDay}
+                onClose={onClose}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
