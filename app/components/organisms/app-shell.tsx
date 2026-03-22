@@ -94,7 +94,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         {/* Page header */}
         <div className="text-center pt-2">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            🌤 Puddle Tracker
+            🌧️ Puddle Tracker
           </h1>
           <p className="text-base-content/50 text-sm mt-1">
             Weather history that&apos;s actually good
