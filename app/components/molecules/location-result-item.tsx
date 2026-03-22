@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 export interface GeoResult {
   id: number;
   name: string;
@@ -10,14 +12,19 @@ export interface GeoResult {
 interface LocationResultItemProps {
   result: GeoResult;
   onSelect: (result: GeoResult) => void;
+  id?: string;
+  active?: boolean;
 }
 
-export default function LocationResultItem({ result, onSelect }: LocationResultItemProps) {
+export default function LocationResultItem({ result, onSelect, id, active }: LocationResultItemProps) {
   return (
-    <li>
+    <li id={id} role="option" aria-selected={active}>
       <button
         type="button"
-        className="w-full text-left px-4 py-2 hover:bg-base-200 transition-colors flex items-center gap-2"
+        className={clsx(
+          'w-full text-left px-4 py-2 transition-colors flex items-center gap-2',
+          active ? 'bg-base-200' : 'hover:bg-base-200',
+        )}
         onClick={() => onSelect(result)}
       >
         <svg

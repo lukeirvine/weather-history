@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import type { Location } from '@/app/lib/weather';
-import LocationResultItem, { type GeoResult } from '@/app/components/molecules/LocationResultItem';
+import LocationResultItem, { type GeoResult } from '@/app/components/molecules/location-result-item';
 
 interface Props {
   onSelect: (location: Location) => void;
@@ -14,8 +14,10 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
   const [results, setResults] = useState<GeoResult[]>([]);
   const [open, setOpen] = useState(false);
   const [searching, setSearching] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -55,6 +57,7 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
         const res = await fetch(`/api/geocode?q=${encodeURIComponent(value.trim())}`);
         const data = await res.json();
         setResults(data.results || []);
+        setActiveIndex(-1);
         setOpen(true);
       } catch {
         setResults([]);
@@ -62,6 +65,33 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
         setSearching(false);
       }
     }, 300);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!open || results.length === 0) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIndex((i) => {
+        const next = Math.min(i + 1, results.length - 1);
+        listRef.current?.children[next]?.scrollIntoView({ block: 'nearest' });
+        return next;
+      });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex((i) => {
+        const next = Math.max(i - 1, 0);
+        listRef.current?.children[next]?.scrollIntoView({ block: 'nearest' });
+        return next;
+      });
+    } else if (e.key === 'Enter') {
+      if (activeIndex >= 0 && activeIndex < results.length) {
+        e.preventDefault();
+        handleSelect(results[activeIndex]);
+      }
+    } else if (e.key === 'Escape') {
+      setOpen(false);
+      setActiveIndex(-1);
+    }
   }
 
   function handleSelect(r: GeoResult) {
@@ -76,6 +106,7 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
     setQuery(`${r.name}${r.admin1 ? `, ${r.admin1}` : ''}, ${r.country}`);
     setOpen(false);
     setResults([]);
+    setActiveIndex(-1);
   }
 
   return (
@@ -101,7 +132,11 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
           value={query}
           onChange={handleInput}
           onFocus={() => results.length > 0 && setOpen(true)}
+          onKeyDown={handleKeyDown}
           autoComplete="off"
+          aria-autocomplete="list"
+          aria-expanded={open}
+          aria-activedescendant={activeIndex >= 0 ? `loc-result-${results[activeIndex]?.id}` : undefined}
         />
         {searching && <span className="loading loading-spinner loading-xs" />}
         {selectedLocation && !searching && (
@@ -121,9 +156,15 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
       </label>
 
       {open && results.length > 0 && (
-        <ul className="absolute z-50 mt-1 w-full bg-base-100 border border-base-300 rounded-box shadow-lg overflow-hidden">
-          {results.map((r) => (
-            <LocationResultItem key={r.id} result={r} onSelect={handleSelect} />
+        <ul ref={listRef} role="listbox" className="absolute z-50 mt-1 w-full bg-base-100 border border-base-300 rounded-box shadow-lg overflow-hidden">
+          {results.map((r, i) => (
+            <LocationResultItem
+              key={r.id}
+              id={`loc-result-${r.id}`}
+              result={r}
+              onSelect={handleSelect}
+              active={i === activeIndex}
+            />
           ))}
         </ul>
       )}

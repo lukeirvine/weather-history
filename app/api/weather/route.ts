@@ -31,10 +31,25 @@ export async function GET(request: NextRequest) {
   url.searchParams.set('end_date', endDate);
   url.searchParams.set(
     'daily',
-    'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum'
+    [
+      'weather_code',
+      'temperature_2m_max',
+      'temperature_2m_min',
+      'precipitation_sum',
+      'precipitation_hours',
+      'snowfall_sum',
+      'sunrise',
+      'sunset',
+      'sunshine_duration',
+      'wind_speed_10m_max',
+      'wind_gusts_10m_max',
+      'wind_direction_10m_dominant',
+      'uv_index_max',
+    ].join(',')
   );
   url.searchParams.set('temperature_unit', 'fahrenheit');
   url.searchParams.set('precipitation_unit', 'inch');
+  url.searchParams.set('wind_speed_unit', 'mph');
   url.searchParams.set('timezone', 'auto');
 
   try {
