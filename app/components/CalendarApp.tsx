@@ -120,9 +120,16 @@ export default function CalendarApp() {
     }
 
     try {
-      const res = await fetch(
-        `/api/weather?lat=${location.latitude}&lon=${location.longitude}&startDate=${startDate}&endDate=${endDate}`
-      );
+      const url = new URL('https://archive-api.open-meteo.com/v1/archive');
+      url.searchParams.set('latitude', location.latitude.toFixed(6));
+      url.searchParams.set('longitude', location.longitude.toFixed(6));
+      url.searchParams.set('start_date', startDate);
+      url.searchParams.set('end_date', endDate);
+      url.searchParams.set('daily', 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum');
+      url.searchParams.set('temperature_unit', 'fahrenheit');
+      url.searchParams.set('precipitation_unit', 'inch');
+      url.searchParams.set('timezone', 'auto');
+      const res = await fetch(url.toString());
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 

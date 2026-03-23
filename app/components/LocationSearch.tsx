@@ -51,7 +51,12 @@ export default function LocationSearch({ onSelect, selectedLocation }: Props) {
     setSearching(true);
     debounceRef.current = setTimeout(async () => {
       try {
-        const res = await fetch(`/api/geocode?q=${encodeURIComponent(value.trim())}`);
+        const url = new URL('https://geocoding-api.open-meteo.com/v1/search');
+        url.searchParams.set('name', value.trim());
+        url.searchParams.set('count', '6');
+        url.searchParams.set('language', 'en');
+        url.searchParams.set('format', 'json');
+        const res = await fetch(url.toString());
         const data = await res.json();
         setResults(data.results || []);
         setOpen(true);
